@@ -1,0 +1,72 @@
+mixin icon(iconName)
+  svg(class="icon icon-" + iconName)
+    use(xlink:href="sprite.svg#" + iconName)
+
+mixin picture(src, exe, width, height)
+  picture
+    source(data-srcset='img/' + src + '-sm.webp' + ' 1x, ' + 'img/' + src + '-sm@2x.webp' + ' 2x ' type="image/webp" media="(max-width: 768px)")
+    source(data-srcset=require('../../img/' + src + '-sm.' + exe).default + ' 1x, ' + require('../../img/' + src + '-sm@2x.' + exe).default + ' 2x ' media="(max-width: 768px)")
+    source(data-srcset='img/' + src + '.webp' + ' 1x, ' + 'img/' + src + '@2x.webp' + ' 2x ' type="image/webp")
+    img.lazy(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.' + exe).default  alt='image' width=width height=height)
+mixin pictureMobile(src, exe, width, height)
+  picture
+    source(data-srcset='img/' + src + '-sm.webp'  type="image/webp" media="(max-width: 768px)")
+    source(data-srcset=require('../../img/' + src + '-sm.' + exe).default  media="(max-width: 768px)")
+    source(data-srcset='img/' + src + '.webp' type="image/webp")
+    img.lazyload(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.' + exe).default  alt='image' width=width height=height)
+mixin pictureMinimal(src, exe, width, height)
+  picture
+    source(data-srcset='img/' + src + '.webp' type="image/webp")
+    img.lazyload(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.' + exe).default  alt='image' width=width height=height)
+mixin pictureRatio(src, width, height)
+  picture
+    source(data-srcset='img/' + src + '.webp' + ' 1x, ' + 'img/' + src + '@2x.webp' + ' 2x ' type="image/webp")
+    source(data-srcset='img/' + src + '.jpg' + ' 1x, ' + 'img/' + src + '@2x.jpg' + ' 2x ' type="image/jpg")
+    img.lazyload(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.jpg').default  alt='image' width=width height=height)
+mixin pictureMinimalFancubox(src, exe, width, height, name)
+  a(href=require('../../img/' + src + '.' + exe).default data-fancybox=name)
+    picture
+      source(data-srcset='img/' + src + '.webp' type="image/webp")
+      img.lazy(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.' + exe).default  alt='image' width=width height=height)
+mixin select(options, placeholder, id)
+  .form-group.form-group--select
+    select(id=id)
+      option(value="" default disabled selected)=placeholder
+      each option in options
+        option(value=option)=option
+mixin multipleSelectDropdown(options, name, id, dataSingle)
+  .select-dropdown.js-select-dropdown(data-single=dataSingle ? "true" : "")
+    button.select-dropdown__toggler(type="button")=name
+    input(type="hidden" name=id id="input-" + id)
+    ul.select-dropdown__list
+      each option, index in options
+        li: a(href="#" id=id + '-' + index)=option
+mixin Swiperpicture(src, exe, width, height)
+  picture
+    source(data-srcset='img/' + src + '.webp' type="image/webp")
+    img.swiper-lazy(src='data:image/svg+xml,%3Csvg viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="' + width + '" height="' + height + '" fill="%23f1f1f1"/%3E%3C/svg%3E' data-src=require('../../img/' + src + '.' + exe).default  alt='image' width=width height=height)
+  .swiper-lazy-preloader
+mixin SwiperpictureFancybox(src, ext, width, height)
+  a(href=require('../../img/' + src + '.' + ext).default data-fancybox='gallery-inner')
+    picture
+      source(data-srcset='img/' + src + '.webp' type="image/webp")
+      img.swiper-lazy(srcset=require('../../img/' + src + '-low.' + ext).default src=require('../../img/' + src + '.' + ext).default data-src=require('../../img/' + src + '.' + ext).default  alt='image' width=width height=height)
+  .swiper-lazy-preloader
+
+mixin FormgroupFloat(item)
+  .form-group.form-group--float.js-input-field
+    input(type=item.type name=item.name id=item.id class=item.class)
+    label(for=item.id)=item.label
+    .form-error Поле обязательно для заполнения
+mixin FormgroupFloatDate(item)
+  .form-group.form-group--float.js-input-field
+    input.js-date(type="text" name=item.name id=item.id)
+    label(for=item.id)=item.label
+    .form-error Поле обязательно для заполнения
+mixin FormGroup(item)
+  .form-group.form-group--label
+    label(for=item.id)=item.label
+    input(type=item.type name=item.name id=item.id)
+    span.placehoder-hint= item.placeholder
+    .form-hint= item.hint
+    .form-error Поле обязательно для заполнения
