@@ -54,5 +54,19 @@
     "webpack-dev-server": "^3.11.0",
     "url-loader": "^4.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@fancyapps/fancybox": "^3.5.7",
+    "flexboxgrid": "^6.3.1",
+    "imask": "^6.0.5",
+    "intersection-observer": "^0.11.0",
+    "jquery": "^3.4.1",
+    "js-cookie": "^2.2.1",
+    "lazysizes": "^5.2.2",
+    "lozad": "^1.16.0",
+    "normalize.css": "^8.0.1",
+    "simple-scrollbar": "^0.4.0",
+    "simplebar": "^5.2.1",
+    "swiper": "^6.2.0",
+    "url-loader": "^4.1.0"
+  }
 }

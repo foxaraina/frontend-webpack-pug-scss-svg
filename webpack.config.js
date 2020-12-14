@@ -6,7 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+
 
 
 const PAGES_DIR = path.resolve(__dirname, 'src/views/pages');
@@ -39,13 +39,6 @@ module.exports = {
     open: true,
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: path.resolve(__dirname, 'src/data/data-map.json'),
-          to: path.resolve(__dirname, 'dist/data'),
-        },
-      ],
-    }),
     ...PAGES.map((page) => new HtmlWebpackPlugin({
       template: `${PAGES_DIR}/${page}`,
       filename: `./${page.replace(/\.pug/, '.html')}`,
@@ -65,8 +58,9 @@ module.exports = {
       "window.jquery": "jquery",
       "$": "jquery",
       "window.$": "jquery"
-    })
+    }),
   ],
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -109,16 +103,6 @@ module.exports = {
             name: '[path][name].[ext]',
           },
         }],
-      },
-      {
-        type: 'javascript/auto',
-        test: /\.json$/,
-        include: [path.resolve(__dirname, 'src/data')],
-        use: [
-          {
-            loader: 'file-loader'
-          }
-        ]
       },
       {
         test: /\.(ttf|woff|woff2|eot)$/,
